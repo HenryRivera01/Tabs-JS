@@ -1,25 +1,28 @@
 const btns = document.querySelectorAll('.tab-btn')
 const about = document.querySelector('.about')
-const aboutContent = document.querySelector('.about-content')
-
 const articles = document.querySelectorAll('.content')
 
 about.addEventListener('click', (e)=>{
     const id = e.target.dataset.id; //accesing to the id using dataset attribute placed on the buttons
-    if(id){ //if the id exists (not undefined)
-         /* Remove 'active' class of buttons */
-         btns.forEach((btn)=>{
-            btn.classList.remove('active') //Remove the active class for all buttons
-            e.target.classList.add('active') //add the active class to the clicked button
-         })
-         /* hide other articles */
-         articles.forEach((article)=>{
-            if(id === article.id){
-                article.classList.add('active')
-            }else{
-                article.classList.remove('active')
-            }
-         })
-    }
     
+    if(id){//if id is no undefined
+        removeActiveClass(btns) //Remove active class of all buttons
+        setActiveTab(e.target) //Add active class in the clicked button
+        showArticle(id) // Show the article with the same button id clicked and hide the others
+    }
 })
+
+
+function removeActiveClass(elements){
+     elements.forEach((el)=>el.classList.remove('active'));
+}
+
+function setActiveTab(button){
+    button.classList.add('active');
+}
+
+function showArticle(id){
+    articles.forEach((article)=>{
+        article.classList.toggle('active', article.id === id)
+    })
+}
